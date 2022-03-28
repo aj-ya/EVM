@@ -4,7 +4,6 @@ import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import * as React from "react";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import MenuBar from "../components/menu/MenuBar";
 
 const Home: NextPage = () => {

@@ -28,7 +28,14 @@ const renderActiveShape = (props: any) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
+      <text
+        x={cx}
+        y={cy}
+        dy={8}
+        textAnchor="middle"
+        fill="#fff"
+        style={{ fontWeight: "bold" }}
+      >
         {payload.name}
       </text>
       <Sector
@@ -46,7 +53,7 @@ const renderActiveShape = (props: any) => {
         startAngle={startAngle}
         endAngle={endAngle}
         innerRadius={outerRadius + 6}
-        outerRadius={outerRadius + 10}
+        outerRadius={outerRadius + 12}
         fill={fill}
       />
       <path
@@ -59,16 +66,16 @@ const renderActiveShape = (props: any) => {
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         textAnchor={textAnchor}
-        fill="#333"
-      >{`Votes ${value}`}</text>
+        fill="#fff"
+      >{`Votes: ${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
         dy={18}
         textAnchor={textAnchor}
-        fill="#999"
+        fill="#fff"
       >
-        {`(Rate ${(percent * 100).toFixed(2)}%)`}
+        {`(Percentage: ${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
   );
@@ -84,7 +91,7 @@ export default function ResultChart(props: any) {
   };
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <PieChart width={800} height={800}>
+      <PieChart width={500} height={500}>
         <Pie
           activeIndex={state.activeIndex}
           activeShape={renderActiveShape}
@@ -92,8 +99,8 @@ export default function ResultChart(props: any) {
           cx="50%"
           cy="50%"
           innerRadius={80}
-          outerRadius={120}
-          fill="#000"
+          outerRadius={140}
+          fill="#ff7f50"
           dataKey="value"
           onMouseEnter={onPieEnter}
         />

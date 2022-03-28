@@ -3,8 +3,9 @@ import styles from "../styles/Vote.module.css";
 import { Key, useEffect, useRef, useState } from "react";
 import MenuBar from "../components/menu/MenuBar";
 const Vote: NextPage = () => {
-  const [casted, CastVote] = useState(false);
+  const [alreadyCast, setCastVote] = useState(false);
   const [getCand, setCand] = useState("");
+  let id: string = "4";
   const [candidates, setCandiates] = useState([
     "Aam Aadmi Party",
     "Bharatiya Janata Party",
@@ -28,11 +29,37 @@ const Vote: NextPage = () => {
       );
     });
   }
-
+  async function castVote() {
+    let d = await fetch("http://localhost:3000/api/vote", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify({ id: { id }, choice: { getCand } }),
+    }).then((d) => d.json());
+    setCastVote(true);
+    console.log(d);
+  }
+  async function getCandidates() {
+    let res = await fetch("http://localhost:3000/api/candidates")
+      .then((d) => d.json())
+      .then((d) => d.results);
+    setCandiates(res);
+  }
+  async function checkVoted(id: string) {
+    let res: boolean = await fetch("http://localhost:3000/api/voted/" + id)
+      .then((d) => d.json())
+      .then((d) => (d as any).voted);
+    if (res) setCastVote(true);
+    else setCastVote(false);
+  }
   useEffect(() => {
     //fetch candidates and check if account has casted vote
+    checkVoted(id);
+    getCandidates();
   }, []);
-  if (!casted)
+  if (!alreadyCast)
     return (
       <div className={styles.container}>
         <h1 className={styles.title}>Welcome to the voting booth.</h1>
@@ -47,6 +74,7 @@ const Vote: NextPage = () => {
           className={styles.submit}
           onClick={(e) => {
             if (candidates.includes(getCand)) {
+              castVote();
               //castVote
             } else {
               (e.target as any).style.border = "3px solid red";

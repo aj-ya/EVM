@@ -40,28 +40,60 @@ const spring = {
 };
 export const Navigation = (props: any) => {
   const [isOn, setIsOn] = useState(false);
-  const [account, setAccount] = useState("");
-  React.useEffect(() => {
-    if (typeof (window as any).ethereum !== "undefined") {
-      if (
-        (window as any).ethereum.isConnected() &&
-        localStorage.getItem("metamask_account")
-      )
-        setIsOn(true);
-    } else {
-      setIsOn(false);
-    }
-  }, []);
+  const [currentAccount, setAccount] = useState("");
+  const switchRef = React.createRef();
   async function getAccount() {
     const accounts = await (window as any).ethereum.request({
       method: "eth_requestAccounts",
     });
-    setAccount(accounts[0]);
-    localStorage.setItem("metamask_account", account);
+    console.log(accounts);
+    if (accounts.length === 0) {
+      (window as any).localStorage.removeItem("metamask_account");
+      setAccount("");
+    } else {
+      setAccount(currentAccount);
+      (window as any).localStorage.setItem("metamask_account", accounts[0]);
+    }
   }
+  function checkConnection() {
+    (window as any).ethereum
+      .request({ method: "eth_accounts" })
+      .then(handleAccountsChanged)
+      .catch(console.error);
+  }
+  function handleAccountsChanged(accounts: Array<string>) {
+    console.log(accounts);
+    if (accounts.length === 0) {
+      window.localStorage.removeItem("metamask_account");
+      setIsOn(false);
+    } else if (accounts[0] !== currentAccount) {
+      setAccount(accounts[0]);
+      window.localStorage.setItem("metamask_account", currentAccount);
+      setIsOn(true);
+    } else {
+      setIsOn(true);
+    }
+  }
+  React.useEffect(() => {
+    if (typeof (window as any).ethereum !== "undefined") {
+      //getAccount();
+      checkConnection();
+      //   if (currentAccount !== "") setIsOn(true);
+      // } else {
+      //   setIsOn(false);
+      // }
+    }
+  }, [currentAccount]);
+  React.useEffect(() => {
+    if (!isOn) {
+      checkConnection();
+    } else {
+    }
+  }, [isOn]);
   const toggleSwitch = () => {
-    if (!isOn) getAccount();
-    if (isOn) window.localStorage.removeItem("metamask_account");
+    if (!isOn) {
+      getAccount();
+    }
     setIsOn(!isOn);
   };
   return (
@@ -76,7 +108,11 @@ export const Navigation = (props: any) => {
             data-isOn={isOn}
             onClick={toggleSwitch}
           >
-            <motion.div className="handle" layout transition={spring} />
+            <motion.div
+              className="handle"
+              layout
+              transition={spring}
+            ></motion.div>
           </div>
         </motion.ul>
       </div>
