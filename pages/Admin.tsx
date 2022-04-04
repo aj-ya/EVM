@@ -40,6 +40,12 @@ const Admin: NextPage = () => {
                 headers: { "Content-Type": "application/json" },
               });
             }}
+            // onTouchStart={() => {
+            //   getElection({
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //   });
+            // }}
           >
             <div className="box-title">
               {" "}

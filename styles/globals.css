@@ -108,7 +108,8 @@ li {
   width: 100vw;
   height: 100vh;
   /* background: linear-gradient(180deg, #0055ff 0%, rgb(0, 153, 255) 100%); */
-  background: linear-gradient(250deg, #7b2ff7, #f107a3);
+  /* background: linear-gradient(250deg, #7b2ff7, #f107a3); */
+  background: linear-gradient(180deg,#6082B6,#6086B7);
   overflow: hidden;
   padding: 0;
   margin: 0;
@@ -127,6 +128,7 @@ li {
   text-align: center;
   padding: 10px;
   text-transform:capitalize;
+  color: #fef;
 }
 .switch {
   width: 120px;
@@ -141,7 +143,8 @@ li {
 
 .switch[data-isOn="true"] {
   justify-content: flex-end;
-  background: linear-gradient(250deg, #7b2ff7, #f107a3);
+  background: linear-gradient(180deg,#6082B6,#6086B7);
+  /* background: linear-gradient(250deg, #7b2ff7, #f107a3); */
 }
 .switch[data-isOn="true"] {
   animation: fadeOut ;
@@ -188,7 +191,7 @@ li {
 }
 .grid-box:hover{
   border: 4px solid blue ;
-  background: linear-gradient(250deg, #f107a3,#7b2ff7);
+  /* background: linear-gradient(250deg, #f107a3,#7b2ff7); */
 }
 .marg{
   margin: 20px;
@@ -212,4 +215,9 @@ li {
   -webkit-text-fill-color: transparent;
   font-weight: bolder;
   /* animation: fadeIn 3s; */
+}
+@media screen and (max-width: 600px) {
+.grid{
+  flex-direction: column;
+}
 }

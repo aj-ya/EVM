@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { PieChart, Pie, Sector, ResponsiveContainer } from "recharts";
 
 const renderActiveShape = (props: any) => {
@@ -36,7 +36,7 @@ const renderActiveShape = (props: any) => {
         fill="#fff"
         style={{ fontWeight: "bold" }}
       >
-        {payload.name}
+        {`${payload.name} `}
       </text>
       <Sector
         cx={cx}
@@ -75,7 +75,7 @@ const renderActiveShape = (props: any) => {
         textAnchor={textAnchor}
         fill="#fff"
       >
-        {`(Percentage: ${(percent * 100).toFixed(2)}%)`}
+        {`( ${(percent * 100).toFixed(2)}%)`}
       </text>
     </g>
   );
@@ -102,7 +102,7 @@ export default function ResultChart(props: any) {
           outerRadius={140}
           fill="#ff7f50"
           dataKey="value"
-          onMouseEnter={onPieEnter}
+          onClick={onPieEnter}
         />
       </PieChart>
     </ResponsiveContainer>

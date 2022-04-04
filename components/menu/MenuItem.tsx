@@ -18,10 +18,17 @@ const variants = {
   },
 };
 
-const colors = ["#FF008C", "#D309E1", "#9C1AFF", "#7700FF", "#4400FF"];
+const colors = [
+  "#545AA7",
+  "#FF008C",
+  "#D309E1",
+  "#9C1AFF",
+  "#7700FF",
+  "#4400FF",
+];
 
 export const MenuItem = ({ i, text }: any) => {
-  const style = { color: `${colors[i]}` };
+  const style = { color: `${colors[0]}` };
   //, border: `2px solid ${colors[i]}`
   return (
     <motion.li
