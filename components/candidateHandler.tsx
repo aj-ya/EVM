@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
-import styles from "../styles/candhandler.module.css";
+import styles from "../styles/candhandler.module.scss";
 import cancel from "../assets/images/cancel.png";
+import { ST } from "next/dist/shared/lib/utils";
+import { style } from "d3";
 export default function CandidateHandler() {
   const inputEl = useRef(null);
   const [cands, setCands]: Array<any> = useState([]);
@@ -9,7 +11,7 @@ export default function CandidateHandler() {
     console.log(cands);
     return cands.map((el: string) => {
       return (
-        <div className={styles.textWrap}>
+        <div className={styles.textWrap} key={el}>
           <div className={styles.text} id={el}>
             {el}
           </div>
@@ -48,9 +50,17 @@ export default function CandidateHandler() {
       >
         <label htmlFor="candidates">Candidate Name:</label>
         <input type="text" ref={inputEl} name="candidates" />
-        <input type="submit" value="Add" />
+        <input type="submit" className="blue" value="Add" />
       </form>
       <div className={styles.addedCands}>{MapCands()}</div>
+      <button
+        className={styles.Finalize}
+        onClick={() => {
+          console.log(cands);
+        }}
+      >
+        Finalize
+      </button>
     </div>
   );
 }
