@@ -41,7 +41,7 @@ const spring = {
 export const Navigation = (props: any) => {
   const [isOn, setIsOn] = useState(false);
   const [currentAccount, setAccount] = useState("");
-  const switchRef = React.createRef();
+  // const switchRef = React.createRef();
   async function getAccount() {
     const accounts = await (window as any).ethereum.request({
       method: "eth_requestAccounts",

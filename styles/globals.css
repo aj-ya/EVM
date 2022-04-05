@@ -114,8 +114,8 @@ li {
   padding: 0;
   margin: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding-top: 100px;
   flex-direction: column;
 }
 .center{
@@ -220,4 +220,18 @@ li {
 .grid{
   flex-direction: column;
 }
+}
+.dashboard{
+  display: flex;
+  min-width: 100%;
+}
+.results{
+  width: 50%;
+  height: 400px;
+}
+.Candidates{
+  width: 50%;
+}
+.result_title{
+  padding: 10px;
 }
