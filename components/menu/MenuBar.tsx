@@ -34,6 +34,7 @@ export default function MenuBar() {
         animate={isOpen ? "open" : "closed"}
         custom={height}
         ref={containerRef}
+        className={`${isOpen}`}
       >
         <motion.div className="background" variants={sidebar} />
         <Navigation isOpen={isOpen} />

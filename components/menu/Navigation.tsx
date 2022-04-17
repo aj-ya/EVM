@@ -105,7 +105,7 @@ export const Navigation = (props: any) => {
           ))}
           <div
             className="switch enableEthereum"
-            data-isOn={isOn}
+            data-ison={isOn}
             onClick={toggleSwitch}
           >
             <motion.div

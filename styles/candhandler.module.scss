@@ -8,7 +8,7 @@ $offwhite:#fef;
   &:hover {
     background-color: $bg;
     color: $offwhite;
-    transition: all 0.3s ease-in-out;
+    // transition: all 0.3s ease-in-out;
   }
 }
 
@@ -37,6 +37,7 @@ $offwhite:#fef;
 .candForm > label{
     font-size: 20px;
     display: inline;
+    width: 140px;
 }
 .candForm > input{
     all:unset;
@@ -61,12 +62,9 @@ $offwhite:#fef;
     border: 2px solid $orange;
     background-color:$offwhite;
     font-weight: bold;
-    transition: .5s;
     &:hover{
-      border: none;
+    //   border: none;
       color: white;
-      font-size: 16px;
-      transform:scale(1.05);
     }
     @include buttonBG($orange);
 }
@@ -81,12 +79,11 @@ $offwhite:#fef;
     padding: 5px 10px 5px 15px;
     border-radius: 15px;
     background-color: $orange;
-    transition: 0.5s;
     &:hover{
-        border: none;
+        // border: none;
         color: white;
-        font-size: 16px;
-        transform:scale(1.05);
+        // font-size: 16px;
+        // transform:scale(1.05);
       }
 }
 .text{
@@ -114,13 +111,11 @@ $offwhite:#fef;
     color: $offwhite;
     font-weight: bold;
     margin-top: 20px;
-    cursor: pointer;
-    transition: .5s;
+    // cursor: pointer;
+    // transition: .5s;
     &:hover{
-      border: none;
+    //   border: none;
       color: white;
-      font-size: 16px;
-      transform:scale(1.05);
     }
     @include buttonBG($orange);
 }

@@ -16,14 +16,16 @@ a {
 * {
   box-sizing: border-box;
 }
-nav {
+nav.true {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   width: 300px;
 }
-
+nav.false {
+  width: 0;
+}
 .background {
   position: absolute;
   top: 0;
@@ -141,12 +143,12 @@ li {
   cursor: pointer;
 }
 
-.switch[data-isOn="true"] {
+.switch[data-ison="true"] {
   justify-content: flex-end;
   background: linear-gradient(180deg,#6082B6,#6086B7);
   /* background: linear-gradient(250deg, #7b2ff7, #f107a3); */
 }
-.switch[data-isOn="true"] {
+.switch[data-ison="true"] {
   animation: fadeOut ;
 }
 @keyframes fadeOut {
@@ -224,13 +226,18 @@ li {
 .dashboard{
   display: flex;
   min-width: 100%;
+
 }
 .results{
   width: 50%;
   height: 400px;
 }
-.Candidates{
+.noElect{
   width: 50%;
+}
+.handlers{
+  display: flex;
+  flex-direction: column;
 }
 .result_title{
   padding: 10px;

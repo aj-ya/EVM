@@ -81,6 +81,8 @@ const renderActiveShape = (props: any) => {
   );
 };
 
+function noRes(data: any) {}
+
 export default function ResultChart(props: any) {
   const { data } = props;
   const [state, setState] = useState({ activeIndex: 0 });

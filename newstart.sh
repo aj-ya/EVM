@@ -1,0 +1,1 @@
+geth --http --http.corsdomain http://remix.ethereum.org --allow-insecure-unlock --http --http.port 8545 --http.addr 127.0.0.1 --http.corsdomain "*" --http.api "eth,net,personal,miner,web3" --datadir ~/evm-bc/gethevm --nodiscover --networkid 1337 --port 30303 console 

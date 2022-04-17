@@ -4,10 +4,55 @@ import * as React from "react";
 import MenuBar from "../components/menu/MenuBar";
 import ResultChart from "../components/ResultChart";
 import CandidateHandler from "../components/candidateHandler";
+import VoterHandler from "../components/voterHandler";
 type ResultArray = {
   name: string;
   value: number;
 }[];
+
+function RetDashComp(props: any) {
+  function RetButtonText() {
+    return ElectionStatus ? "Conclude" : "Commence";
+  }
+  const [ElectionStatus, setElectionStatus] = React.useState(false);
+  let status: boolean = props.status;
+  if (status) {
+    return (
+      <div className="handlers">
+        <div className="Candidates">
+          <h1 className="title">Add Candidates</h1>
+          <CandidateHandler />
+        </div>
+        <div className="Voters">
+          {/* <h1 className="title">Change Election Status</h1> */}
+          {/* <VoterHandler /> */}
+          <div className="grid">
+            <div
+              className="grid-box"
+              onClick={() => {
+                if (confirm("Are you sure you want to save this.")) {
+                  setElectionStatus(!ElectionStatus);
+                  console.log(ElectionStatus);
+                }
+              }}
+            >
+              <div className="box-title">{RetButtonText()} Election</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="electionDetails">
+        <div className="candList">
+          <h1 className="title">All Candidates</h1>
+          <div className="singleCand"></div>
+        </div>
+      </div>
+    );
+  }
+}
 const Admin: NextPage = () => {
   const [isAuth, setAuth] = useState<boolean>(false);
   const [ElectStatus, setElectStatus] = useState<boolean>(false);
@@ -25,14 +70,15 @@ const Admin: NextPage = () => {
   };
   const getElection = async (data?: any) => {
     let stat: boolean;
-    if (!data)
+    if (!data) {
       stat = await fetch("http://localhost:3000/api/electionStatus")
         .then((d) => d.json())
         .then((d: any) => d.status);
-    else
+    } else {
       stat = await fetch("http://localhost:3000/api/electionStatus", data)
         .then((d) => d.json())
         .then((d: any) => d.status);
+    }
     setElectStatus(stat);
     console.log(stat);
   };
@@ -51,13 +97,12 @@ const Admin: NextPage = () => {
       <div className="container">
         <h1 className="title">Hello, Admin</h1>
         <div className="dashboard">
-          <div className="Candidates">
-            <h1 className="title">Add Candidates</h1>
-            <CandidateHandler />
+          <div className="noElect">
+            <RetDashComp status={ElectStatus} />
           </div>
           <div className="results">
             <h1 className="title result_title">Current Results</h1>
-            <form action="" method="post"></form>
+
             <ResultChart data={pollResults} />
           </div>
         </div>

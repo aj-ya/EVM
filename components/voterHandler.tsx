@@ -2,12 +2,12 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import styles from "../styles/candhandler.module.scss";
 import cancel from "../assets/images/cancel.png";
-export default function CandidateHandler() {
+export default function VoterHandler() {
   const inputEl = useRef(null);
-  const [cands, setCands]: Array<any> = useState([]);
-  function MapCands() {
-    console.log(cands);
-    return cands.map((el: string) => {
+  const [voters, setVoters]: Array<any> = useState([]);
+  function MapVoters() {
+    console.log(voters);
+    return voters.map((el: string) => {
       return (
         <div className={styles.textWrap} key={el}>
           <div className={styles.text} id={el}>
@@ -19,8 +19,8 @@ export default function CandidateHandler() {
               let curr = document.getElementById(el);
               let txt = (curr as any).innerText;
               console.log(txt);
-              const result = cands.filter((el: any) => el !== txt);
-              setCands(result);
+              const result = voters.filter((el: any) => el !== txt);
+              setVoters(result);
             }}
           >
             <Image src={cancel} alt="remove" />
@@ -38,23 +38,23 @@ export default function CandidateHandler() {
           e.preventDefault();
           // console.log(inputEl.current.value);
           if (inputEl.current !== null && (inputEl.current as any).value !== "")
-            if (!cands.includes((inputEl.current as any).value))
-              setCands((cands: Array<any>) => [
-                ...cands,
+            if (!voters.includes((inputEl.current as any).value))
+              setVoters((voters: Array<any>) => [
+                ...voters,
                 (inputEl.current as any).value as string,
               ]);
-          // console.log(cands);
+          // console.log(voters);
         }}
       >
-        <label htmlFor="candidates">Candidate Name:</label>
-        <input type="text" ref={inputEl} name="candidates" />
+        <label htmlFor="voters">Voter ID:</label>
+        <input type="text" ref={inputEl} name="voters" />
         <input type="submit" className="blue" value="Add" />
       </form>
-      <div className={styles.addedCands}>{MapCands()}</div>
+      <div className={styles.addedCands}>{MapVoters()}</div>
       <button
         className={styles.Finalize}
         onClick={() => {
-          console.log(cands);
+          console.log(voters);
           //post rest
         }}
       >
