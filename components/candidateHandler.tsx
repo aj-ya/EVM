@@ -53,8 +53,20 @@ export default function CandidateHandler() {
       <div className={styles.addedCands}>{MapCands()}</div>
       <button
         className={styles.Finalize}
-        onClick={() => {
+        onClick={async () => {
+          let admin = await fetch("http://localhost:3000/api/getAdmin")
+            .then((d) => d.json())
+            .then((d) => d.admin);
           console.log(cands);
+          let d = await fetch("http://localhost:3000/api/vote", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify({ id: { admin }, cands: { cands } }),
+          }).then((d) => d.json());
+          console.log(d);
           //post rest
         }}
       >

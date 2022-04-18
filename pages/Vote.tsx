@@ -44,7 +44,10 @@ const Vote: NextPage = () => {
   async function getCandidates() {
     let res = await fetch("http://localhost:3000/api/candidates")
       .then((d) => d.json())
-      .then((d) => d.results);
+      .then((d) => d.results)
+      .then((array) => {
+        return array.map((a: any) => a[0]);
+      });
     setCandiates(res);
   }
   async function checkVoted(id: string) {

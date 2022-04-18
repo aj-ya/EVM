@@ -1,0 +1,28 @@
+=============== Apr 17, 2022 (IST) ===============
+21:34:05.647797 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+21:34:05.657923 db@open opening
+21:34:05.658330 version@stat F·[] S·0B[] Sc·[]
+21:34:05.661606 db@janitor F·2 G·0
+21:34:05.661623 db@open done T·3.683505ms
+21:34:05.662178 db@close closing
+21:34:05.662214 db@close done T·38.231µs
+=============== Apr 17, 2022 (IST) ===============
+21:34:44.298992 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+21:34:44.299081 version@stat F·[] S·0B[] Sc·[]
+21:34:44.299094 db@open opening
+21:34:44.299127 journal@recovery F·1
+21:34:44.300929 journal@recovery recovering @1
+21:34:44.312322 memdb@flush created L0@2 N·10 S·597B "H\xfb\xb8..+\xaaY,v3":"r\x00\x00..+\xaaY,v5"
+21:34:44.318237 version@stat F·[1] S·597B[597B] Sc·[0.25]
+21:34:44.333078 db@janitor F·3 G·0
+21:34:44.333159 db@open done T·34.033909ms
+=============== Apr 18, 2022 (IST) ===============
+16:32:57.942251 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+16:32:57.942659 version@stat F·[1] S·597B[597B] Sc·[0.25]
+16:32:57.942675 db@open opening
+16:32:57.942723 journal@recovery F·1
+16:32:57.945351 journal@recovery recovering @3
+16:32:57.951440 memdb@flush created L0@5 N·1305 S·73KiB "Dat..ion,v12":"unc..own,v18"
+16:32:57.953279 version@stat F·[2] S·73KiB[73KiB] Sc·[0.50]
+16:32:57.966925 db@janitor F·4 G·0
+16:32:57.966947 db@open done T·24.2643ms

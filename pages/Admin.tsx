@@ -4,12 +4,10 @@ import * as React from "react";
 import MenuBar from "../components/menu/MenuBar";
 import ResultChart from "../components/ResultChart";
 import CandidateHandler from "../components/candidateHandler";
-import VoterHandler from "../components/voterHandler";
 type ResultArray = {
   name: string;
   value: number;
 }[];
-
 function RetDashComp(props: any) {
   function RetButtonText() {
     return ElectionStatus ? "Conclude" : "Commence";
@@ -54,20 +52,26 @@ function RetDashComp(props: any) {
   }
 }
 const Admin: NextPage = () => {
+  const [admin, setAdmin] = useState<string>("");
   const [isAuth, setAuth] = useState<boolean>(false);
   const [ElectStatus, setElectStatus] = useState<boolean>(false);
   const [pollResults, _setResults] = React.useState<ResultArray>([
     { name: "notaa", value: 404 },
   ]);
+
   const getResults = async function () {
     let result: ResultArray = await fetch(
-      "http://localhost:3000/api/pollResults"
+      "http://localhost:3000/api/candidates"
     )
       .then((d) => d.json())
-      .then((d) => d.results);
+      .then((d) => d.results)
+      .then((array) => {
+        return array.map((a: any) => ({ name: a[0], value: parseInt(a[1]) }));
+      });
     console.log(result);
     _setResults(result);
   };
+
   const getElection = async (data?: any) => {
     let stat: boolean;
     if (!data) {
@@ -82,13 +86,23 @@ const Admin: NextPage = () => {
     setElectStatus(stat);
     console.log(stat);
   };
-  let account = "";
 
+  async function returnAdmin() {
+    let x = await fetch("http://localhost:3000/api/electionStatus")
+      .then((d) => d.json())
+      .then((d) => d.admin);
+    setAdmin(x);
+    console.log(x);
+  }
+  let account = "";
   React.useEffect(() => {
     //getAuthDetails
-    setAuth(true);
-    getResults();
+    returnAdmin();
     getElection();
+    getResults();
+    localStorage.getItem("metamask_account") === admin
+      ? setAuth(true)
+      : setAuth(false);
     account = localStorage.getItem("metamask_account") || "";
   }, []);
 
@@ -105,27 +119,6 @@ const Admin: NextPage = () => {
 
             <ResultChart data={pollResults} />
           </div>
-        </div>
-        <div className="grid">
-          {/* <div
-            className="grid-box marg"
-            onClick={() => {
-              getElection({
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-              });
-            }}
-          >
-            <div className="box-title">
-              {" "}
-              {ElectStatus ? "Conclude " : "Start "}Election
-            </div>
-          </div> */}
-          {/* <a href="/Results">
-            <div className="grid-box marg">
-              <div className="box-title">See Current Results &rarr;</div>
-            </div>
-          </a> */}
         </div>
         <MenuBar />
       </div>

@@ -26,10 +26,13 @@ const Results: NextPage = () => {
   ]);
   const getResults = async function () {
     let result: ResultArray = await fetch(
-      "http://localhost:3000/api/pollResults"
+      "http://localhost:3000/api/candidates"
     )
       .then((d) => d.json())
-      .then((d) => d.results);
+      .then((d) => d.results)
+      .then((array) => {
+        return array.map((a: any) => ({ name: a[0], value: parseInt(a[1]) }));
+      });
     console.log(result);
     _setResults(result);
   };
