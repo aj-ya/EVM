@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import { contract_address } from "../../utility/contract_address";
+import { contract_address } from "../../utility/addresses";
 import type { NextApiRequest, NextApiResponse } from "next";
 const web3 = new Web3("http://127.0.0.1:8545");
 let abi = JSON.parse(
@@ -20,18 +20,13 @@ export default function voter(req: NextApiRequest, res: NextApiResponse<Data>) {
   switch (method) {
     case "POST":
       // Update or create data in your database
-      if (id == admin) {
-        //add cands
-        //cast vote
-        contract.methods
-          .addCandidates(cands)
-          .send({ from: id })
-          .then(console.log);
-
-        res.status(200).json({ updated: true });
-      } else {
-        res.status(200).json({ updated: false });
-      }
+      //add cands
+      //cast vote
+      contract.methods
+        .addCandidates(cands)
+        .send({ from: id })
+        .then(console.log);
+      res.status(200).json({ updated: true });
       break;
     default:
       res.setHeader("Allow", ["POST"]);

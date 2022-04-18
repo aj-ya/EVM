@@ -64,6 +64,7 @@ export const Navigation = (props: any) => {
   }
   function handleAccountsChanged(accounts: Array<string>) {
     console.log(accounts);
+    window.localStorage.setItem("metamask_account", accounts[0]);
     if (accounts.length === 0) {
       window.localStorage.removeItem("metamask_account");
       setIsOn(false);

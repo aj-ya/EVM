@@ -58,13 +58,14 @@ export default function CandidateHandler() {
             .then((d) => d.json())
             .then((d) => d.admin);
           console.log(cands);
-          let d = await fetch("http://localhost:3000/api/vote", {
+
+          let d = await fetch("http://localhost:3000/api/addCands", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               // 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: JSON.stringify({ id: { admin }, cands: { cands } }),
+            body: JSON.stringify({ id: admin, cands: cands }),
           }).then((d) => d.json());
           console.log(d);
           //post rest

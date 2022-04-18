@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Web3 from "web3";
-import { contract_address } from "../../utility/contract_address";
+import { contract_address } from "../../utility/addresses";
 type Data = {
   results: string[];
 };

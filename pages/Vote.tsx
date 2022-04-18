@@ -2,17 +2,26 @@ import { NextPage } from "next";
 import styles from "../styles/Vote.module.css";
 import { Key, useEffect, useRef, useState } from "react";
 import MenuBar from "../components/menu/MenuBar";
-const Vote: NextPage = () => {
+
+export async function getServerSideProps() {
+  const candidates = await fetch("http://localhost:3000/api/candidates")
+    .then((d) => d.json())
+    .then((d) => d.results)
+    .then((array) => {
+      return array.map((a: any) => a[0] as string);
+    });
+  const status = await fetch("http://localhost:3000/api/electionStatus")
+    .then((d) => d.json())
+    .then((d: any) => d.status);
+  return {
+    props: { candidates, status },
+  };
+}
+const Vote: NextPage = (props: any) => {
+  let { candidates, status } = props;
   const [alreadyCast, setCastVote] = useState(false);
   const [getCand, setCand] = useState("");
-  let id: string = "4";
-  const [candidates, setCandiates] = useState([
-    "Aam Aadmi Party",
-    "Bharatiya Janata Party",
-    "Indian National Congress",
-    "None Of the Above",
-  ]);
-
+  const [id, setId] = useState("");
   function MapCands(props: any) {
     return props.allCands.map((scand: String) => {
       return (
@@ -29,27 +38,20 @@ const Vote: NextPage = () => {
       );
     });
   }
-  async function castVote() {
+
+  async function castVote(id: string) {
     let d = await fetch("http://localhost:3000/api/vote", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         // 'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({ id: { id }, choice: { getCand } }),
+      body: JSON.stringify({ id: id, choice: getCand }),
     }).then((d) => d.json());
     setCastVote(true);
     console.log(d);
   }
-  async function getCandidates() {
-    let res = await fetch("http://localhost:3000/api/candidates")
-      .then((d) => d.json())
-      .then((d) => d.results)
-      .then((array) => {
-        return array.map((a: any) => a[0]);
-      });
-    setCandiates(res);
-  }
+
   async function checkVoted(id: string) {
     let res: boolean = await fetch("http://localhost:3000/api/voted/" + id)
       .then((d) => d.json())
@@ -58,41 +60,58 @@ const Vote: NextPage = () => {
     else setCastVote(false);
   }
   useEffect(() => {
-    //fetch candidates and check if account has casted vote
-    checkVoted(id);
-    getCandidates();
-  }, []);
-  if (!alreadyCast)
-    return (
-      <div className={styles.container}>
-        <h1 className={styles.title}>Welcome to the voting booth.</h1>
-        <div className={styles.selectedWrap}>
-          <div>You have chosen</div>
-          <span className={styles.selectedCand}>{getCand}</span>
+    (window as any).ethereum
+      .request({ method: "eth_accounts" })
+      .then((x: any) => {
+        if (x.length !== 0) setId(x[0]);
+      })
+      .catch(console.error);
+    console.log("a");
+  });
+  useEffect(() => {
+    if (id !== "") checkVoted(id);
+  }, [id]);
+  if (status) {
+    if (!alreadyCast) {
+      return (
+        <div className={styles.container}>
+          <h1 className={styles.title}>Welcome to the voting booth.</h1>
+          <div className={styles.selectedWrap}>
+            <div>You have chosen</div>
+            <span className={styles.selectedCand}>{getCand}</span>
+          </div>
+          <div className={styles.grid}>
+            <MapCands allCands={candidates} />
+          </div>
+          <button
+            className={styles.submit}
+            onClick={(e) => {
+              if (candidates.includes(getCand)) {
+                console.log(id);
+                castVote(id);
+                //castVote
+              } else {
+                (e.target as any).style.border = "3px solid red";
+              }
+            }}
+          >
+            Cast Vote.
+          </button>
+          <MenuBar />
         </div>
-        <div className={styles.grid}>
-          <MapCands allCands={candidates} />
+      );
+    } else {
+      return (
+        <div className="container">
+          <h1 className="title">You have already cast your vote.</h1>
+          <MenuBar />
         </div>
-        <button
-          className={styles.submit}
-          onClick={(e) => {
-            if (candidates.includes(getCand)) {
-              castVote();
-              //castVote
-            } else {
-              (e.target as any).style.border = "3px solid red";
-            }
-          }}
-        >
-          Cast Vote.
-        </button>
-        <MenuBar />
-      </div>
-    );
-  else {
+      );
+    }
+  } else {
     return (
       <div className="container">
-        <h1 className="title">You have already cast your vote.</h1>
+        <h1 className="title">The Voting Booth is Closed.</h1>
         <MenuBar />
       </div>
     );
