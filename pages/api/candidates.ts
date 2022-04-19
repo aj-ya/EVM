@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Web3 from "web3";
-import { contract_address } from "../../utility/addresses";
+import { admin_address, contract_address } from "../../utility/addresses";
 type Data = {
   results: string[];
 };
-let admin = "0x93fc465539d392af873fb501de703c3512a5f279";
+let admin = admin_address;
 export default async function candidtes(
   req: NextApiRequest,
   res: NextApiResponse<Data>

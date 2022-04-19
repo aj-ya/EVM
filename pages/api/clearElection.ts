@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import Web3 from "web3";
-import { contract_address } from "../../utility/addresses";
-let admin = "0x93fc465539d392af873fb501de703c3512a5f279";
+import { admin_address, contract_address } from "../../utility/addresses";
+let admin = admin_address;
 
 export default async function electionStatus(
   req: NextApiRequest,

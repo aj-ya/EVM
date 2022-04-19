@@ -2,8 +2,6 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { MenuItem } from "./MenuItem";
 import { useState } from "react";
-import { local } from "d3";
-
 const variants = {
   open: {
     transition: { staggerChildren: 0.07, delayChildren: 0.2 },
