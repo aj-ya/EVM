@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: evm-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: evm
+  template:
+    metadata:
+      labels:
+        app: evm
+    spec:
+      containers:
+      - name: sketchpad
+        image: ajeyaunoff/evm:latest
+        ports:
+        - containerPort: 3000

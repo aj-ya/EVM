@@ -108,7 +108,7 @@ function RetDashComp(props: any) {
                   )
                     .then((d) => d.json())
                     .then((d: any) => d.cleared);
-                  if (cleared) prompt("cleared");
+                  if (cleared) alert("cleared");
                 }
               }}
             >
@@ -123,7 +123,7 @@ function RetDashComp(props: any) {
       return pollResults.map((k: any) => {
         return (
           <div className="singleCand" key={k.name}>
-            {k.name}
+            &#62; {k.name}
           </div>
         );
       });
