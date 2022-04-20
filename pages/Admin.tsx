@@ -4,9 +4,10 @@ import * as React from "react";
 import MenuBar from "../components/menu/MenuBar";
 import ResultChart from "../components/ResultChart";
 import CandidateHandler from "../components/candidateHandler";
+import { rpcLink } from "../utility/addresses";
 
 export async function getServerSideProps() {
-  const candidates = await fetch("http://localhost:3000/api/candidates")
+  const candidates = await fetch(rpcLink + "/api/candidates")
     .then((d) => d.json())
     .then((d) => d.results)
     .then((array) => {
@@ -14,11 +15,11 @@ export async function getServerSideProps() {
         return { name: a[0], value: parseInt(a[1]) };
       });
     });
-  const status = await fetch("http://localhost:3000/api/electionStatus")
+  const status = await fetch(rpcLink + "/api/electionStatus")
     .then((d) => d.json())
     .then((d: any) => d.status);
   console.log(status);
-  const admin = await fetch("http://localhost:3000/api/getAdmin")
+  const admin = await fetch(rpcLink + "/api/getAdmin")
     .then((d) => d.json())
     .then((d) => d.admin);
   console.log(admin);
@@ -82,16 +83,13 @@ function RetDashComp(props: any) {
               onClick={async () => {
                 if (confirm("Are you sure you want to continue.")) {
                   setElectionStatus(!ElectionStatus);
-                  let d = await fetch(
-                    "http://localhost:3000/api/electionStatus",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                      },
-                    }
-                  ).then((d) => d.json());
+                  let d = await fetch(rpcLink + "/api/electionStatus", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                  }).then((d) => d.json());
                   console.log(d);
                   console.log(ElectionStatus);
                 }
@@ -103,9 +101,7 @@ function RetDashComp(props: any) {
               className="grid-box"
               onClick={async () => {
                 if (confirm("Are you sure you want to clear all data.")) {
-                  const cleared = await fetch(
-                    "http://localhost:3000/api/clearElection"
-                  )
+                  const cleared = await fetch(rpcLink + "/api/clearElection")
                     .then((d) => d.json())
                     .then((d: any) => d.cleared);
                   if (cleared) alert("cleared");
@@ -141,16 +137,13 @@ function RetDashComp(props: any) {
               onClick={async () => {
                 if (confirm("Are you sure you want to continue.")) {
                   setElectionStatus(!ElectionStatus);
-                  let d = await fetch(
-                    "http://localhost:3000/api/electionStatus",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                        // 'Content-Type': 'application/x-www-form-urlencoded',
-                      },
-                    }
-                  ).then((d) => d.json());
+                  let d = await fetch(rpcLink + "/api/electionStatus", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      // 'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                  }).then((d) => d.json());
                   console.log(d);
                   console.log(ElectionStatus);
                 }

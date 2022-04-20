@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import MenuBar from "../components/menu/MenuBar";
 import React from "react";
 import ResultChart from "../components/ResultChart";
+import { rpcLink } from "../utility/addresses";
 type Data = {
   results: {
     name: string;
@@ -15,7 +16,7 @@ type ResultArray = {
 const Results: NextPage = () => {
   const [electionState, setElectionState] = React.useState<boolean>(false);
   const getElection = async () => {
-    let stat: boolean = await fetch("http://localhost:3000/api/electionStatus")
+    let stat: boolean = await fetch(rpcLink + "/api/electionStatus")
       .then((d) => d.json())
       .then((d: any) => d.status);
     setElectionState(stat);
@@ -25,9 +26,7 @@ const Results: NextPage = () => {
     { name: "notaa", value: 404 },
   ]);
   const getResults = async function () {
-    let result: ResultArray = await fetch(
-      "http://localhost:3000/api/candidates"
-    )
+    let result: ResultArray = await fetch(rpcLink + "/api/candidates")
       .then((d) => d.json())
       .then((d) => d.results)
       .then((array) => {

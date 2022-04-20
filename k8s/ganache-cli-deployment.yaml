@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: ganache-cli
-        image: trufflesuite/ganache-cli
+        image: ajeyaunoff/ganache:latest
         ports:
         - containerPort: 8545

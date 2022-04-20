@@ -2,15 +2,16 @@ import { NextPage } from "next";
 import styles from "../styles/Vote.module.css";
 import { Key, useEffect, useRef, useState } from "react";
 import MenuBar from "../components/menu/MenuBar";
+import { rpcLink } from "../utility/addresses";
 
 export async function getServerSideProps() {
-  const candidates = await fetch("http://localhost:3000/api/candidates")
+  const candidates = await fetch(rpcLink + "/api/candidates")
     .then((d) => d.json())
     .then((d) => d.results)
     .then((array) => {
       return array.map((a: any) => a[0] as string);
     });
-  const status = await fetch("http://localhost:3000/api/electionStatus")
+  const status = await fetch(rpcLink + "/api/electionStatus")
     .then((d) => d.json())
     .then((d: any) => d.status);
   return {
@@ -40,7 +41,7 @@ const Vote: NextPage = (props: any) => {
   }
 
   async function castVote(id: string) {
-    let d = await fetch("http://localhost:3000/api/vote", {
+    let d = await fetch(rpcLink + "/api/vote", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +54,7 @@ const Vote: NextPage = (props: any) => {
   }
 
   async function checkVoted(id: string) {
-    let res: boolean = await fetch("http://localhost:3000/api/voted/" + id)
+    let res: boolean = await fetch(rpcLink + "/api/voted/" + id)
       .then((d) => d.json())
       .then((d) => (d as any).voted);
     if (res) setCastVote(true);
